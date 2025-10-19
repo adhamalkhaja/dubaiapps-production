@@ -1,0 +1,356 @@
+@import 'tailwindcss';
+@import "tw-animate-css";
+
+/* Subtle chat edge throb effect */
+@keyframes chat-edge-throb {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(246, 130, 31, 0.10),
+      inset 0 0 0 1px rgba(246, 130, 31, 0.16);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(255, 61, 0, 0.08),
+      inset 0 0 0 2px rgba(255, 61, 0, 0.22);
+  }
+}
+
+.chat-edge-throb {
+  animation: chat-edge-throb 1.6s ease-in-out infinite;
+  border-radius: 0.625rem; /* Factory.ai subtle radius */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-edge-throb { animation: none; }
+}
+
+@custom-variant dark (&:is(.dark *));
+@plugin '@tailwindcss/typography';
+@theme inline {
+	/* Font families - Geist Sans & Mono matching marketing site */
+	--font-sans: 'Geist Sans', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	--font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
+
+	/* Border radius - subtle and minimal */
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	/* Color mappings */
+	--color-accent: var(--build-accent-color);
+	--color-destructive: var(--destructive);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	/* Subtle shadows matching Factory.ai aesthetic */
+	--shadow-textarea:
+		6px 6px 13px 0px rgba(0, 0, 0, 0.04),
+		24px 24px 24px 0px rgba(0, 0, 0, 0.03),
+		53px 53px 32px 0px rgba(0, 0, 0, 0.02),
+		0px 0px 0px 1px rgba(217, 217, 217, 0.2);
+
+	/* Layout colors */
+	--color-bg-1: var(--build-chat-colors-bg-1);
+	--color-bg-2: var(--build-chat-colors-bg-2);
+	--color-bg-3: var(--build-chat-colors-bg-3);
+	--color-bg-4: var(--build-chat-colors-bg-4);
+	--color-border-primary: var(--build-chat-colors-border-primary);
+	--color-border-secondary: var(--build-chat-colors-border-secondary);
+	--color-border-tertiary: var(--build-chat-colors-border-tertiary);
+	--color-danger: var(--build-chat-colors-danger);
+	--color-brand-heavy: var(--build-chat-colors-brand-heavy);
+	--color-brand-primary: var(--build-chat-colors-brand-primary);
+	--color-brand-subtle: var(--build-chat-colors-brand-subtle);
+	--color-text-inverted: var(--build-chat-colors-text-inverted);
+	--color-text-primary: var(--build-chat-colors-text-primary);
+	--color-text-secondary: var(--build-chat-colors-text-secondary);
+	--color-text-tertiary: var(--build-chat-colors-text-tertiary);
+
+	--animate-typing-dot: typing-dot 1.2s ease-in-out infinite;
+	--animate-shake: shake 1s ease-in-out;
+}
+
+
+:root {
+	/* Factory.ai / Dubai Apps Color Palette - Light Mode (Default) */
+	--radius: 0.625rem;
+
+	/* Marketing site exact colors */
+	--build-accent-color: #ef6f2e; /* Muted orange accent */
+	--accent-light: #f28d52;
+	--accent-dark: #d15a1f;
+
+	/* Neutral palette matching marketing */
+	--neutral-100: #d6d3d2;
+	--neutral-200: #c2bfbd;
+	--neutral-300: #a8a5a3;
+	--neutral-400: #8e8b89;
+	--neutral-500: #74716f;
+	--neutral-600: #5a5755;
+	--neutral-700: #403d3b;
+	--neutral-800: #302d2c;
+	--neutral-900: #262321;
+	--neutral-1000: #1f1d1c;
+
+	/* Backgrounds - lighter, cleaner */
+	--build-chat-colors-bg-1: #eeeeee;
+	--build-chat-colors-bg-2: #f6f6f6;
+	--build-chat-colors-bg-3: #fafafa; /* Match marketing site */
+	--build-chat-colors-bg-4: #ffffff;
+
+	/* Borders - more subtle */
+	--build-chat-colors-border-primary: var(--neutral-300);
+	--build-chat-colors-border-secondary: var(--neutral-200);
+	--build-chat-colors-border-tertiary: var(--neutral-200);
+	--border: var(--neutral-300);
+	--input: var(--neutral-200);
+	--ring: var(--neutral-500);
+
+	/* Brand colors - unified accent */
+	--build-chat-colors-brand-heavy: #ef6f2e;
+	--build-chat-colors-brand-primary: #ef6f2e;
+	--build-chat-colors-brand-subtle: #f28d52;
+	--build-chat-colors-danger: #ef4444;
+	--destructive: #ef4444;
+
+	/* Text colors - matching marketing */
+	--build-chat-colors-text-inverted: #ffffff;
+	--build-chat-colors-text-primary: #020202; /* Almost black */
+	--build-chat-colors-text-secondary: var(--neutral-600);
+	--build-chat-colors-text-tertiary: var(--neutral-500);
+}
+
+.dark {
+	/* Factory.ai / Dubai Apps Dark Mode Palette */
+	--destructive: #ef4444;
+	--border: var(--neutral-800);
+	--input: var(--neutral-900);
+
+	/* Dark backgrounds - matching marketing site */
+	--build-chat-colors-bg-1: #020202;
+	--build-chat-colors-bg-2: #0a0a0a;
+	--build-chat-colors-bg-3: #151515;
+	--build-chat-colors-bg-4: #1f1d1c;
+
+	/* Dark borders - using neutral palette */
+	--build-chat-colors-border-primary: var(--neutral-800);
+	--build-chat-colors-border-secondary: var(--neutral-900);
+	--build-chat-colors-border-tertiary: var(--neutral-900);
+
+	/* Brand colors - unified accent (same in light/dark) */
+	--build-chat-colors-brand-heavy: #ef6f2e;
+	--build-chat-colors-brand-primary: #ef6f2e;
+	--build-chat-colors-brand-subtle: #f28d52;
+
+	/* Dark text colors */
+	--build-chat-colors-text-inverted: #020202;
+	--build-chat-colors-text-primary: #eeeeee;
+	--build-chat-colors-text-secondary: var(--neutral-400);
+	--build-chat-colors-text-tertiary: var(--neutral-500);
+
+	/* Subtle shadows for dark mode */
+	--shadow-dialog:
+		0px 18px 60px 0px rgba(0, 0, 0, 0.3),
+		3px 3px 13px 0px rgba(0, 0, 0, 0.2), -3px 3px 13px 0px rgba(0, 0, 0, 0.2),
+		24px 24px 24px 0px rgba(0, 0, 0, 0.15),
+		-24px 24px 24px 0px rgba(0, 0, 0, 0.15),
+		53px 53px 32px 0px rgba(0, 0, 0, 0.1),
+		0px 0px 0px 1px rgba(255, 255, 255, 0.05);
+	--shadow-elevation:
+		6px 6px 13px 0px rgba(0, 0, 0, 0.3),
+		24px 24px 24px 0px rgba(0, 0, 0, 0.2),
+		53px 53px 32px 0px rgba(0, 0, 0, 0.15),
+		0px 0px 0px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Base styles - Tailwind v4 compatible */
+* {
+	@apply border-border-primary outline-ring/50;
+}
+body {
+	@apply bg-bg-3 text-text-primary h-full;
+}
+button {
+	@apply cursor-pointer;
+}
+select {
+	@apply cursor-pointer;
+}
+
+@theme {
+	--font-sans:
+		'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+	--color-brand: #0092b8;
+	--color-text: #000;
+	--color-text-on-brand: #fff;
+
+	--shadow-dialog:
+		0px 18px 60px 0px rgba(6, 6, 5, 0.1),
+		3px 3px 13px 0px rgba(0, 0, 0, 0.04), -3px 3px 13px 0px rgba(0, 0, 0, 0.04),
+		24px 24px 24px 0px rgba(0, 0, 0, 0.03),
+		-24px 24px 24px 0px rgba(0, 0, 0, 0.03),
+		53px 53px 32px 0px rgba(0, 0, 0, 0.02),
+		0px 0px 0px 1px rgba(217, 217, 217, 0.2);
+	--shadow-elevation:
+		6px 6px 13px 0px rgba(0, 0, 0, 0.04),
+		24px 24px 24px 0px rgba(0, 0, 0, 0.03),
+		53px 53px 32px 0px rgba(0, 0, 0, 0.02),
+		0px 0px 0px 1px rgba(217, 217, 217, 0.2);
+	--shadow-soft-layered:
+		3px 3px 13px 0px rgba(0, 0, 0, 0.04), 24px 24px 24px 0px rgba(0, 0, 0, 0.03);
+}
+
+
+/* Hack from https://stackoverflow.com/a/71876526 */
+.monaco-editor {
+	position: absolute !important;
+}
+
+@utility bg-graph-paper {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+
+/* Phase Timeline Custom Scrollbar */
+.phase-timeline-scroll::-webkit-scrollbar {
+	width: 6px;
+}
+
+.phase-timeline-scroll::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.05);
+	border-radius: 3px;
+}
+
+.phase-timeline-scroll::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+}
+
+.phase-timeline-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.dark .phase-timeline-scroll::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .phase-timeline-scroll::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .phase-timeline-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.a-tag a {
+	@apply text-brand;
+}
+
+.prose {
+	/* --tw-prose-invert-counters: rgb(156, 187, 192); */
+	/* --tw-prose-invert-bullets: rgb(156, 187, 192); */
+	--tw-prose-th-headers: --value(var(--color-text));
+	--tw-prose-body: --value(var(--color-text));
+	--tw-prose-headings: --value(var(--color-text));
+	--tw-prose-code: --value(var(--color-text));
+	--tw-prose-bold: --value(var(--color-text));
+	--tw-prose-quotes: --value(var(--color-text));
+	--tw-prose-counters: --value(var(--color-text));
+}
+
+/* Chat messages custom scrollbar */
+.chat-messages-scroll::-webkit-scrollbar {
+	width: 8px;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.15);
+}
+
+.dark .chat-messages-scroll::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.dark .chat-messages-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+/* Terminal custom scrollbar */
+.terminal-scroll::-webkit-scrollbar {
+	width: 8px;
+}
+
+.terminal-scroll::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.05);
+	border-radius: 4px;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	transition: background-color 0.2s ease;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.dark .terminal-scroll::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .terminal-scroll::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.dark .terminal-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.25);
+}
+
+/* Hide scrollbar but keep scroll behavior */
+.no-scrollbar {
+-ms-overflow-style: none; /* IE and Edge */
+scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+display: none; /* Chrome, Safari, Opera */
+}
